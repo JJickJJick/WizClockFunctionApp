@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">WizClock</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_clock">Clock</string>
+    <string name="title_alarm">Alarm</string>
+    <string name="title_timer">Timer</string>
+    <string name="title_stopwatch">Stopwatch</string>
+</resources>
