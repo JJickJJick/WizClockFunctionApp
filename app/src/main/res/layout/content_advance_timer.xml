@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ui.AdvanceTimerActivity"
+    tools:showIn="@layout/activity_advance_timer">
 
     <TextView
         android:id="@+id/text_view_countdown"
@@ -11,95 +14,71 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:layout_marginTop="24dp"
         android:gravity="center"
         android:text="00:00:00"
         android:textColor="@android:color/black"
         android:textSize="50sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/timePicker"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/timePicker" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <RelativeLayout
-        android:id="@+id/timePicker"
+        android:id="@+id/repeatSelection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/text_view_countdown">
 
-        <NumberPicker
-            android:id="@+id/hourPicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scrollbarSize="4dp"
-            android:theme="@style/numberPickerCustomSize" />
-
-        <TextView
-            android:id="@+id/textView"
+        <Spinner
+            android:id="@+id/repeatCnt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/hourPicker"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text=":"
-            android:textColor="@android:color/black"
-            android:textSize="60sp" />
-
-        <NumberPicker
-            android:id="@+id/minPicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/textView"
-            android:scrollbarSize="4dp"
-            android:theme="@style/numberPickerCustomSize" />
+            android:entries="@array/cnt"
+            android:gravity="center" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/repeatText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/minPicker"
-            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/repeatCnt"
             android:gravity="center"
-            android:text=":"
+            android:text="@string/repeat"
             android:textColor="@android:color/black"
-            android:textSize="60sp" />
+            android:textSize="20sp" />
 
-        <NumberPicker
-            android:id="@+id/secPicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/textView2"
-            android:scrollbarSize="4dp"
-            android:theme="@style/numberPickerCustomSize" />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/advance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
-        android:text="@string/advanced_mode"
-        app:layout_constraintBottom_toTopOf="@+id/button_Layout"
+    <ListView
+        android:id="@+id/timeList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:transcriptMode="alwaysScroll"
+        app:layout_constraintBottom_toTopOf="@id/button_Layout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/repeatSelection" />
 
     <LinearLayout
         android:id="@+id/button_Layout"
-        android:layout_width="0dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="16dp"
         android:orientation="horizontal"
         android:weightSum="7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
@@ -112,6 +91,7 @@
             android:id="@+id/button_start_pause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_weight="2"
             android:background="@drawable/button_shape_blue"
             android:text="@string/start"
@@ -127,6 +107,7 @@
             android:id="@+id/button_reset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/button_start_pause"
             android:layout_weight="2"
             android:background="@drawable/button_shape_red"
             android:text="@string/reset"
@@ -139,12 +120,5 @@
             android:layout_weight="1"
             android:orientation="horizontal"></LinearLayout>
     </LinearLayout>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

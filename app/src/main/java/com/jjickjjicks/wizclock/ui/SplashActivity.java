@@ -1,6 +1,4 @@
-package com.jjickjjicks.wizclock;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.jjickjjicks.wizclock.ui;
 
 import android.app.Activity;
 import android.content.Intent;

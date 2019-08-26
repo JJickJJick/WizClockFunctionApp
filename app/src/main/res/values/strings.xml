@@ -1,8 +1,24 @@
 <resources>
     <string name="app_name">WizClock</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">WizClock</string>
     <string name="title_clock">Clock</string>
     <string name="title_alarm">Alarm</string>
     <string name="title_timer">Timer</string>
     <string name="title_stopwatch">Stopwatch</string>
+    <string name="start">START</string>
+    <string name="pause">PAUSE</string>
+    <string name="record">RECORD</string>
+    <string name="reset">RESET</string>
+    <string name="cancel">CANCEL</string>
+    <string name="advanced_mode">Use Advanced Mode</string>
+    <string name="current_time_is">Current Time is</string>
+    <string name="unsupport">This function is not ready yet!</string>
+    <string name="title_activity_advance_timer">Advanced Timer</string>
+    <string name="announce">Announce(KOR)</string>
+    <string name="feedback">Feedback</string>
+    <string name="opensource">Open Source</string>
+    <string name="insert">Insert</string>
+    <string name="repeat">Repetitions</string>
+    <string name="delete">Delete</string>
+    <string name="fullStack">Only up to 10 can be inserted.</string>
 </resources>

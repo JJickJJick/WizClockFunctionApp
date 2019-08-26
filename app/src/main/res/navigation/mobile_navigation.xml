@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_clock"
-        android:name="com.jjickjjicks.wizclock.ui.clock.ClockFragment"
+        android:name="com.jjickjjicks.wizclock.ui.function.ClockFragment"
         android:label="@string/title_clock"
         tools:layout="@layout/fragment_clock" />
 
     <fragment
         android:id="@+id/navigation_alarm"
-        android:name="com.jjickjjicks.wizclock.ui.alarm.AlarmFragment"
+        android:name="com.jjickjjicks.wizclock.ui.function.AlarmFragment"
         android:label="@string/title_alarm"
         tools:layout="@layout/fragment_alarm" />
 
@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/navigation_stopwatch"
-        android:name="com.jjickjjicks.wizclock.ui.stopwatch.StopwatchFragment"
+        android:name="com.jjickjjicks.wizclock.ui.function.StopwatchFragment"
         android:label="@string/title_stopwatch"
         tools:layout="@layout/fragment_stopwatch" />
 </navigation>
