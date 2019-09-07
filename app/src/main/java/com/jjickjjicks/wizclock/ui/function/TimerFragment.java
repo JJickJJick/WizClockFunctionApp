@@ -14,7 +14,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.jjickjjicks.wizclock.ui.AdvanceTimerActivity;
 import com.jjickjjicks.wizclock.R;
 
 import java.util.Locale;
@@ -25,8 +24,8 @@ public class TimerFragment extends Fragment {
     private Button mButtonStartPause;
     private Button mButtonReset;
     private CountDownTimer mCountDownTimer;
-    private boolean mTimerRunning;
-    private long mTimeLeftInMillis;
+    private String mTimerStatus;
+    private long mTimeLeftInMillis, remainTime;
     private RelativeLayout timePicker;
     private NumberPicker hourPicker, minPicker, secPicker;
 
@@ -72,12 +71,12 @@ public class TimerFragment extends Fragment {
         mButtonStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mTimerRunning) {
+                if (mTimerStatus == "run") {
                     pauseTimer();
-                } else {
-                    mTimeLeftInMillis = hourPicker.getValue() * 3600000 + minPicker.getValue() * 60000 + secPicker.getValue() * 1000;
-                    if (mTimeLeftInMillis != 0)
-                        startTimer();
+                } else if (mTimerStatus == "pause") {
+                    startTimer(remainTime);
+                } else if (hourPicker.getValue() * 3600000 + minPicker.getValue() * 60000 + secPicker.getValue() * 1000 != 0) {
+                    startTimer(hourPicker.getValue() * 3600000 + minPicker.getValue() * 60000 + secPicker.getValue() * 1000);
                 }
             }
         });
@@ -102,9 +101,17 @@ public class TimerFragment extends Fragment {
         return root;
     }
 
-    private void startTimer() {
+    private void startTimer(long time) {
         timePicker.setVisibility(View.INVISIBLE);
         mTextViewCountDown.setVisibility(View.VISIBLE);
+        mTimerStatus = "run";
+        mButtonStartPause.setText(R.string.pause);
+        mButtonReset.setVisibility(View.INVISIBLE);
+        actTimer(time);
+    }
+
+    private void actTimer(long time) {
+        mTimeLeftInMillis = time;
         updateCountDownText();
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
             @Override
@@ -115,30 +122,32 @@ public class TimerFragment extends Fragment {
 
             @Override
             public void onFinish() {
-                mTimerRunning = false;
+                timePicker.setVisibility(View.VISIBLE);
+                mTextViewCountDown.setVisibility(View.INVISIBLE);
+                mTimerStatus = "stop";
                 mButtonStartPause.setText(R.string.start);
                 mButtonStartPause.setVisibility(View.INVISIBLE);
                 mButtonReset.setVisibility(View.VISIBLE);
             }
         }.start();
-
-        mTimerRunning = true;
-        mButtonStartPause.setText(R.string.pause);
-        mButtonReset.setVisibility(View.INVISIBLE);
     }
 
     private void pauseTimer() {
         mCountDownTimer.cancel();
-        mTimerRunning = false;
+        mTimerStatus = "pause";
+        remainTime = mTimeLeftInMillis;
         mButtonStartPause.setText(R.string.start);
         mButtonReset.setVisibility(View.VISIBLE);
     }
 
     private void resetTimer() {
-        mTextViewCountDown.setVisibility(View.INVISIBLE);
         timePicker.setVisibility(View.VISIBLE);
+        mTextViewCountDown.setVisibility(View.INVISIBLE);
+        mTimerStatus = "stop";
         mButtonReset.setVisibility(View.INVISIBLE);
         mButtonStartPause.setVisibility(View.VISIBLE);
+        mTimeLeftInMillis = 0;
+        updateCountDownText();
     }
 
     private void updateCountDownText() {

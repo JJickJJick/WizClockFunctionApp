@@ -10,29 +10,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.jjickjjicks.wizclock.R;
 
 public class StopwatchFragment extends Fragment {
-    TextView myOutput;
-    TextView myRec;
-    Button myBtnStart;
-    Button myBtnRec;
-
     final static int Init = 0;
     final static int Run = 1;
     final static int Pause = 2;
+    private TextView myOutput, myRec, advanceFunction;
+    private Button myBtnStart, myBtnRec;
+    private int cur_Status = Init; //현재의 상태를 저장할변수를 초기화함.
+    private int myCount = 1;
+    private long myBaseTime, myPauseTime;
+    Handler myTimer = new Handler() {
+        public void handleMessage(Message msg) {
+            myOutput.setText(getTimeOut());
 
-    int cur_Status = Init; //현재의 상태를 저장할변수를 초기화함.
-    int myCount = 1;
-    long myBaseTime;
-    long myPauseTime;
+            //sendEmptyMessage 는 비어있는 메세지를 Handler 에게 전송하는겁니다.
+            myTimer.sendEmptyMessage(0);
+        }
+    };
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_stopwatch, container, false);
@@ -105,6 +106,15 @@ public class StopwatchFragment extends Fragment {
             }
         });
 
+
+        advanceFunction = root.findViewById(R.id.advance);
+        advanceFunction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), R.string.unsupport, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return root;
     }
 
@@ -113,15 +123,6 @@ public class StopwatchFragment extends Fragment {
         // TODO Auto-generated method stub
         super.onDestroy();
     }
-
-    Handler myTimer = new Handler() {
-        public void handleMessage(Message msg) {
-            myOutput.setText(getTimeOut());
-
-            //sendEmptyMessage 는 비어있는 메세지를 Handler 에게 전송하는겁니다.
-            myTimer.sendEmptyMessage(0);
-        }
-    };
 
     //현재시간을 계속 구해서 출력하는 메소드
     String getTimeOut() {

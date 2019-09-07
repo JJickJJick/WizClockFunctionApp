@@ -1,27 +1,20 @@
-package com.jjickjjicks.wizclock.ui;
+package com.jjickjjicks.wizclock.ui.function;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.NumberPicker;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.jjickjjicks.wizclock.R;
 import com.jjickjjicks.wizclock.data.TimerAdapter;
-import com.jjickjjicks.wizclock.data.TimerData;
 import com.jjickjjicks.wizclock.ui.item.InsertTimeDialog;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 public class AdvanceTimerActivity extends AppCompatActivity {
@@ -131,8 +124,8 @@ public class AdvanceTimerActivity extends AppCompatActivity {
     }
 
     private void makeRepetition(int cnt) {
-        long[] temp = new long [adapter.getCount()];
-        for(int i = 0; i<temp.length;i++)
+        long[] temp = new long[adapter.getCount()];
+        for (int i = 0; i < temp.length; i++)
             temp[i] = adapter.getItem(i).getmTimeLeftInMillis();
         for (int i = 0; i < cnt - 1; i++) {
             for (int j = 0; j < temp.length; j++)

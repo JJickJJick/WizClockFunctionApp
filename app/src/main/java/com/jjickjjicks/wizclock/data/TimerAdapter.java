@@ -56,7 +56,7 @@ public class TimerAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public void addTimer(int cnt, long time){
+    public void addTimer(int cnt, long time) {
         TimerData item = new TimerData();
 
         item.timeCnt = cnt;
