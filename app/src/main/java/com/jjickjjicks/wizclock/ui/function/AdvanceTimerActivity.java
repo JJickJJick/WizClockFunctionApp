@@ -48,7 +48,7 @@ public class AdvanceTimerActivity extends AppCompatActivity {
         mButtonStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                timer = new CountdownTimerService(mButtonStartPause, mButtonReset, mTextViewCountDown, adapter, Integer.parseInt(repeatCnt.getSelectedItem().toString()), getApplicationContext());
+                timer.setInformation(mButtonStartPause, mButtonReset, mTextViewCountDown, adapter, Integer.parseInt(repeatCnt.getSelectedItem().toString()), getApplicationContext());
                 timer.activation();
             }
         });

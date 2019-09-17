@@ -13,7 +13,6 @@ import androidx.core.app.NotificationCompat;
 
 import com.jjickjjicks.wizclock.R;
 import com.jjickjjicks.wizclock.data.TimerAdapter;
-import com.jjickjjicks.wizclock.ui.function.TimerFragment;
 
 import java.util.Locale;
 
@@ -29,6 +28,15 @@ public class CountdownTimerService {
     private TimerAdapter adapter;
 
     public CountdownTimerService(Button mButtonStartPause, Button mButtonReset, TextView mTextViewCountDown, TimerAdapter adapter, int repeatCnt, Context activity) {
+        this.mButtonStartPause = mButtonStartPause;
+        this.mButtonReset = mButtonReset;
+        this.mTextViewCountDown = mTextViewCountDown;
+        this.adapter = adapter;
+        this.repeatCnt = repeatCnt;
+        this.activity = activity;
+    }
+
+    public void setInformation(Button mButtonStartPause, Button mButtonReset, TextView mTextViewCountDown, TimerAdapter adapter, int repeatCnt, Context activity) {
         this.mButtonStartPause = mButtonStartPause;
         this.mButtonReset = mButtonReset;
         this.mTextViewCountDown = mTextViewCountDown;

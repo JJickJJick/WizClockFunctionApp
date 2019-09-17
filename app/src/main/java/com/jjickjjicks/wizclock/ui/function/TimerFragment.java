@@ -74,7 +74,7 @@ public class TimerFragment extends Fragment {
                 timePicker.setVisibility(View.INVISIBLE);
                 mTextViewCountDown.setVisibility(View.VISIBLE);
                 adapter.addTimer(1, (hourPicker.getValue() * 3600000 + minPicker.getValue() * 60000 + secPicker.getValue() * 1000));
-                timer = new CountdownTimerService(mButtonStartPause, mButtonReset, mTextViewCountDown, adapter, 1, getActivity());
+                timer.setInformation(mButtonStartPause, mButtonReset, mTextViewCountDown, adapter, 1, getActivity());
                 timer.activation();
             }
         });
