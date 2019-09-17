@@ -2,7 +2,6 @@ package com.jjickjjicks.wizclock.ui.function;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,19 +14,17 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.jjickjjicks.wizclock.R;
-
-import java.util.Locale;
+import com.jjickjjicks.wizclock.data.TimerAdapter;
+import com.jjickjjicks.wizclock.service.CountdownTimerService;
 
 public class TimerFragment extends Fragment {
-
     private TextView mTextViewCountDown, advanceFunction;
     private Button mButtonStartPause;
     private Button mButtonReset;
-    private CountDownTimer mCountDownTimer;
-    private String mTimerStatus;
-    private long mTimeLeftInMillis, remainTime;
     private RelativeLayout timePicker;
+    private TimerAdapter adapter;
     private NumberPicker hourPicker, minPicker, secPicker;
+    private CountdownTimerService timer;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_timer, container, false);
@@ -68,26 +65,29 @@ public class TimerFragment extends Fragment {
             }
         });
 
+        adapter = new TimerAdapter();
+        timer = new CountdownTimerService(mButtonStartPause, mButtonReset, mTextViewCountDown, adapter, 1, getActivity());
+
         mButtonStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mTimerStatus == "run") {
-                    pauseTimer();
-                } else if (mTimerStatus == "pause") {
-                    startTimer(remainTime);
-                } else if (hourPicker.getValue() * 3600000 + minPicker.getValue() * 60000 + secPicker.getValue() * 1000 != 0) {
-                    startTimer(hourPicker.getValue() * 3600000 + minPicker.getValue() * 60000 + secPicker.getValue() * 1000);
-                }
+                timePicker.setVisibility(View.INVISIBLE);
+                mTextViewCountDown.setVisibility(View.VISIBLE);
+                adapter.addTimer(1, (hourPicker.getValue() * 3600000 + minPicker.getValue() * 60000 + secPicker.getValue() * 1000));
+                timer = new CountdownTimerService(mButtonStartPause, mButtonReset, mTextViewCountDown, adapter, 1, getActivity());
+                timer.activation();
             }
         });
 
         mButtonReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resetTimer();
+                timePicker.setVisibility(View.VISIBLE);
+                mTextViewCountDown.setVisibility(View.INVISIBLE);
+                timer.resetTimer();
             }
         });
-        updateCountDownText();
+        timer.updateCountDownText();
 
         advanceFunction = root.findViewById(R.id.advance);
         advanceFunction.setOnClickListener(new View.OnClickListener() {
@@ -101,62 +101,5 @@ public class TimerFragment extends Fragment {
         return root;
     }
 
-    private void startTimer(long time) {
-        timePicker.setVisibility(View.INVISIBLE);
-        mTextViewCountDown.setVisibility(View.VISIBLE);
-        mTimerStatus = "run";
-        mButtonStartPause.setText(R.string.pause);
-        mButtonReset.setVisibility(View.INVISIBLE);
-        actTimer(time);
-    }
 
-    private void actTimer(long time) {
-        mTimeLeftInMillis = time;
-        updateCountDownText();
-        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                mTimeLeftInMillis = millisUntilFinished;
-                updateCountDownText();
-            }
-
-            @Override
-            public void onFinish() {
-                timePicker.setVisibility(View.VISIBLE);
-                mTextViewCountDown.setVisibility(View.INVISIBLE);
-                mTimerStatus = "stop";
-                mButtonStartPause.setText(R.string.start);
-                mButtonStartPause.setVisibility(View.INVISIBLE);
-                mButtonReset.setVisibility(View.VISIBLE);
-            }
-        }.start();
-    }
-
-    private void pauseTimer() {
-        mCountDownTimer.cancel();
-        mTimerStatus = "pause";
-        remainTime = mTimeLeftInMillis;
-        mButtonStartPause.setText(R.string.start);
-        mButtonReset.setVisibility(View.VISIBLE);
-    }
-
-    private void resetTimer() {
-        timePicker.setVisibility(View.VISIBLE);
-        mTextViewCountDown.setVisibility(View.INVISIBLE);
-        mTimerStatus = "stop";
-        mButtonReset.setVisibility(View.INVISIBLE);
-        mButtonStartPause.setVisibility(View.VISIBLE);
-        mTimeLeftInMillis = 0;
-        updateCountDownText();
-    }
-
-    private void updateCountDownText() {
-        int hours = (int) (mTimeLeftInMillis / 1000) / 3600;
-        int minutes = (int) ((mTimeLeftInMillis / 1000) % 3600) / 60;
-        int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
-
-        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
-
-        mTextViewCountDown.setText(timeLeftFormatted);
-    }
 }
