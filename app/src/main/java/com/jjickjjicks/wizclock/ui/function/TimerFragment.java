@@ -73,8 +73,10 @@ public class TimerFragment extends Fragment {
             public void onClick(View v) {
                 timePicker.setVisibility(View.INVISIBLE);
                 mTextViewCountDown.setVisibility(View.VISIBLE);
-                adapter.addTimer(1, (hourPicker.getValue() * 3600000 + minPicker.getValue() * 60000 + secPicker.getValue() * 1000));
-                timer.setInformation(mButtonStartPause, mButtonReset, mTextViewCountDown, adapter, 1, getActivity());
+                if (timer.getmTimerStatus() == "stop") {
+                    adapter.addTimer(1, (hourPicker.getValue() * 3600000 + minPicker.getValue() * 60000 + secPicker.getValue() * 1000));
+                    timer.setInformation(mButtonStartPause, mButtonReset, mTextViewCountDown, adapter, 1, getActivity());
+                }
                 timer.activation();
             }
         });

@@ -1,10 +1,15 @@
 package com.jjickjjicks.wizclock.service;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.media.AudioAttributes;
+import android.net.Uri;
 import android.os.Build;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,7 +27,7 @@ public class CountdownTimerService {
     private TextView mTextViewCountDown;
     private Button mButtonStartPause, mButtonReset;
     private CountDownTimer mCountDownTimer;
-    private String mTimerStatus;
+    private String mTimerStatus = "stop";
     private long mTimeLeftInMillis, remainTime;
     private int remainIndex, repeatCnt;
     private TimerAdapter adapter;
@@ -115,6 +120,7 @@ public class CountdownTimerService {
         mButtonStartPause.setVisibility(View.VISIBLE);
         mTimeLeftInMillis = 0;
         updateCountDownText();
+        adapter.clear();
     }
 
     public void updateCountDownText() {
@@ -130,14 +136,16 @@ public class CountdownTimerService {
     public void createNotification(String title, String text) {
         NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
 
+        Uri soundUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://"+ activity.getPackageName() + "/" + R.raw.shipbell);
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground) //BitMap 이미지 요구
                 .setContentTitle(title)
                 .setContentText(text)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
+//                .setSound(soundUri)
                 .setAutoCancel(true);
-//                .addAction(R.drawable.ic_launcher_foreground, "test",
-//                        pendingIntent);  // Service 호출 Intent
 
         //OREO API 26 이상에서는 채널 필요
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -147,6 +155,11 @@ public class CountdownTimerService {
 
             NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, title, importance);
             channel.setDescription(text);
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                    .build();
+            channel.setSound(soundUri, audioAttributes);
 
             // 노티피케이션 채널을 시스템에 등록
             assert notificationManager != null;
@@ -157,6 +170,9 @@ public class CountdownTimerService {
 
         assert notificationManager != null;
         notificationManager.notify(1234, builder.build()); // 고유숫자로 노티피케이션 동작시킴
+    }
 
+    public String getmTimerStatus(){
+        return mTimerStatus;
     }
 }

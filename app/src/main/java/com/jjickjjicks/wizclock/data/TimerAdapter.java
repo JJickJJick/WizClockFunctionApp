@@ -64,4 +64,8 @@ public class TimerAdapter extends BaseAdapter {
 
         listData.add(item);
     }
+
+    public void clear(){
+        listData.clear();
+    }
 }
