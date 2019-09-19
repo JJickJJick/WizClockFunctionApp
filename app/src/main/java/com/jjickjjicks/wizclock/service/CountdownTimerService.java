@@ -5,11 +5,11 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Build;
 import android.os.CountDownTimer;
-import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -136,7 +136,7 @@ public class CountdownTimerService {
     public void createNotification(String title, String text) {
         NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Uri soundUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://"+ activity.getPackageName() + "/" + R.raw.shipbell);
+        Uri soundUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + activity.getPackageName() + "/" + R.raw.shipbell); // Alarm mp3 위치 지정(오류 있는 듯)
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground) //BitMap 이미지 요구
@@ -149,8 +149,8 @@ public class CountdownTimerService {
 
         //OREO API 26 이상에서는 채널 필요
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-            builder.setSmallIcon(R.drawable.ic_launcher_foreground); //mipmap 사용시 Oreo 이상에서 시스템 UI 에러남
+            builder.setSmallIcon(R.drawable.ic_launcher); //mipmap 사용시 Oreo 이상에서 시스템 UI 에러남
+            builder.setLargeIcon(BitmapFactory.decodeResource(activity.getResources(), R.drawable.ic_launcher)); //mipmap 사용시 Oreo 이상에서 시스템 UI 에러남
             int importance = NotificationManager.IMPORTANCE_HIGH;
 
             NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, title, importance);
@@ -164,10 +164,10 @@ public class CountdownTimerService {
             // 노티피케이션 채널을 시스템에 등록
             assert notificationManager != null;
             notificationManager.createNotificationChannel(channel);
-
-        } else
+        } else {
             builder.setSmallIcon(R.mipmap.ic_launcher); // Oreo 이하에서 mipmap 사용하지 않으면 Couldn't create icon: StatusBarIcon 에러남
-
+            builder.setLargeIcon(BitmapFactory.decodeResource(activity.getResources(), R.mipmap.ic_launcher)); // Oreo 이하에서 mipmap 사용하지 않으면 Couldn't create icon: StatusBarIcon 에러남
+        }
         assert notificationManager != null;
         notificationManager.notify(1234, builder.build()); // 고유숫자로 노티피케이션 동작시킴
     }
