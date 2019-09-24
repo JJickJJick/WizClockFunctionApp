@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "652178023046",
+    "firebase_url": "https://wizclock-5ed5c.firebaseio.com",
+    "project_id": "wizclock-5ed5c",
+    "storage_bucket": "wizclock-5ed5c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:652178023046:android:02b31b59fb5b151bbaa707",
+        "android_client_info": {
+          "package_name": "com.jjickjjicks.wizclock"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "652178023046-s4pi35gp2oi358k7e5ph2mfapb2k5dtl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jjickjjicks.wizclock",
+            "certificate_hash": "0e36c44d5273f71e4d231d60d92ad70785f9273b"
+          }
+        },
+        {
+          "client_id": "652178023046-6eclvgotbdt9m3mrnvhus1hvf7kanq8g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3degzKNe_be3ZVZ--_OwqvRcIsXVKpwE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "652178023046-6eclvgotbdt9m3mrnvhus1hvf7kanq8g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
