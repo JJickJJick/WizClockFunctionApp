@@ -144,7 +144,7 @@ public class CountdownTimerService {
                 .setContentText(text)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
-//                .setSound(soundUri)
+                .setSound(soundUri)
                 .setAutoCancel(true);
 
         //OREO API 26 이상에서는 채널 필요
