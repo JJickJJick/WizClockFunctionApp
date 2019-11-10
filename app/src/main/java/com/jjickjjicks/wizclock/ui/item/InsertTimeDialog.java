@@ -11,7 +11,7 @@ import android.widget.NumberPicker;
 import com.jjickjjicks.wizclock.R;
 
 public class InsertTimeDialog extends Dialog implements View.OnClickListener {
-    public InsertTimeDialogListener insertTimeDialogListener;
+    private InsertTimeDialogListener insertTimeDialogListener;
     private Context context;
     private Button positiveButton, negativeButton;
     private NumberPicker hourPicker, minPicker, secPicker;

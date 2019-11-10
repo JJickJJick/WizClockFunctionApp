@@ -59,8 +59,8 @@ public class TimerAdapter extends BaseAdapter {
     public void addTimer(int cnt, long time) {
         TimerData item = new TimerData();
 
-        item.timeCnt = cnt;
-        item.mTimeLeftInMillis = time;
+        item.setTimeCnt(cnt);
+        item.setmTimeLeftInMillis(time);
 
         listData.add(item);
     }

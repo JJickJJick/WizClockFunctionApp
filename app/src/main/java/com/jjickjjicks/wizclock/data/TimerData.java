@@ -3,8 +3,16 @@ package com.jjickjjicks.wizclock.data;
 import java.util.Locale;
 
 public class TimerData {
-    public int timeCnt;
-    public long mTimeLeftInMillis;
+    private int timeCnt;
+    private long mTimeLeftInMillis;
+
+    public void setTimeCnt(int timeCnt) {
+        this.timeCnt = timeCnt;
+    }
+
+    public void setmTimeLeftInMillis(long mTimeLeftInMillis) {
+        this.mTimeLeftInMillis = mTimeLeftInMillis;
+    }
 
     public int getTimeCnt() {
         return timeCnt;
